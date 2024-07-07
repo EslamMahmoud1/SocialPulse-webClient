@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <span>Social Pulse</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <div *ngIf="authService.currentUserSig() === null">
+    <button mat-button routerLink="/login">
+      <mat-icon>login</mat-icon>
+      Login
+    </button>
+    <button mat-button routerLink="/register">
+      <mat-icon>person_add</mat-icon>
+      Register
+    </button>
+  </div>
+  <div *ngIf="authService.currentUserSig()">
+    <button mat-button routerLink="/profile">
+      <mat-icon>account_circle</mat-icon>
+      Profile
+    </button>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </div>
+</mat-toolbar>

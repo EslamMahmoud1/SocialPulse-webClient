@@ -1,0 +1,43 @@
+<div class="post-container">
+  <mat-card class="post-card">
+    <mat-card-header>
+      <mat-card-title>Post Title</mat-card-title>
+      <mat-card-subtitle>Posted by User Name</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ post.content }}</p>
+      <!-- <img *ngIf="post.imageUrl" [src]="post.imageUrl" alt="Post Image" />
+      <video *ngIf="post.videoUrl" controls>
+        <source [src]="post.videoUrl" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> -->
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="comments-card">
+    <mat-card-header>
+      <mat-card-title>Comments</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let comment of post?.comments">
+          <p>{{ comment }}</p>
+        </mat-list-item>
+      </mat-list>
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+        <mat-form-field appearance="outline">
+          <mat-label>Add a comment</mat-label>
+          <input matInput formControlName="comment" />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="commentForm.invalid"
+        >
+          Post Comment
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

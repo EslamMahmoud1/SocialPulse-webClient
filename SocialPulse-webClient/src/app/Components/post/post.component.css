@@ -1,0 +1,42 @@
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: #7f89be;
+  flex: 1;
+}
+
+.post-card,
+.comments-card {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+mat-card-header {
+  text-align: center;
+}
+
+mat-card-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+mat-card-content img,
+mat-card-content video {
+  width: 100%;
+  margin-top: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+}
