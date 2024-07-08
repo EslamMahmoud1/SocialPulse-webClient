@@ -59,14 +59,17 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       this.http
-        .post<{ user: IUser }>(`${environment.apiUrl}/users`, {
-          user: this.registerForm.getRawValue(),
-        })
+        .post<{ user: IUser }>(
+          `${environment.apiUrl}/api/Account/register`,
+          { user: this.registerForm.getRawValue() },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
         .subscribe((response) => {
-          console.log(response);
-          console.log(this.authService.currentUserSig());
-          this.authService.currentUserSig.set(response.user);
-          console.log(this.authService.currentUserSig());
+          this.authService.currentUserSig = response;
           this.router.navigate(['/']);
         });
     }

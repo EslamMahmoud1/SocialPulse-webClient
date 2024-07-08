@@ -5,9 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServiceService } from '../../Services/auth-service.service';
-import { HttpClient } from '@angular/common/http';
-import { IUser } from '../../models/user';
-import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-nav-bar',
@@ -25,9 +22,9 @@ import { environment } from '../../../enviroments/enviroment';
   styleUrl: './nav-bar.component.css',
 })
 export class NavBarComponent {
-  constructor(private http: HttpClient, auth: AuthServiceService) {}
   authService = inject(AuthServiceService);
   logout() {
-    this.authService.currentUserSig.set(null);
+    this.authService.currentUserSig = null;
+    localStorage.removeItem('token');
   }
 }

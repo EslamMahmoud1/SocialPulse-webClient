@@ -44,7 +44,7 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -56,12 +56,18 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.http
-        .post<{ user: IUser }>(`${environment.apiUrl}/api/Account/login`, {
-          user: this.loginForm.getRawValue(),
-        })
+        .post<{ user: IUser }>(
+          `${environment.apiUrl}/api/Account/login`,
+          JSON.stringify(this.loginForm.getRawValue()),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
         .subscribe((response) => {
-          console.log(response);
-          this.authService.currentUserSig.set(response.user);
+          this.authService.currentUserSig = response;
+          localStorage.setItem('token', this.authService.currentUserSig.token);
           this.router.navigate(['/']);
         });
     }
