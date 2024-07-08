@@ -20,9 +20,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if (this.auth.currentUserSig) {
       this.http
-        .get<IPost[]>(`${environment.apiUrl}/api/NewsFeed`)
+        .get<IPost[]>(`${environment.apiUrl}/api/NewsFeed`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
         .subscribe((data) => {
           this.posts = data;
+          console.log(this.posts);
         });
     }
   }

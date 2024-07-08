@@ -16,6 +16,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { IPost } from '../../models/ipost';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../enviroments/enviroment';
+import { Comment } from '../../models/comment';
 @Component({
   selector: 'app-post',
   standalone: true,
@@ -37,26 +40,31 @@ import { IPost } from '../../models/ipost';
 })
 export class PostComponent {
   commentForm: FormGroup;
-  @Input() post!: IPost;
-  constructor(private fb: FormBuilder) {
+  @Input() post: IPost = {} as IPost;
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.commentForm = this.fb.group({
       comment: ['', Validators.required],
     });
   }
 
-  likePost() {
-    // Handle like post logic
-    console.log('Post liked');
-  }
-
-  sharePost() {
-    // Handle share post logic
-    console.log('Post shared');
-  }
-
   addComment() {
+    console.log(this.commentForm.value.comment);
     if (this.commentForm.valid) {
-      this.post.comments.push(this.commentForm.value.comment);
+      this.http
+        .post<{ comment: Comment }>(
+          `${environment.apiUrl}/api/Post/${this.post.id}/comment`,
+          {
+            text: this.commentForm.value.comment,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .subscribe((data) => {
+          console.log(data);
+        });
       this.commentForm.reset();
     }
   }

@@ -4,5 +4,5 @@ export interface IPost {
   content: string;
   filePath: string;
   createdDate: Date;
-  comments: Comment[];
+  comments: any[];
 }
